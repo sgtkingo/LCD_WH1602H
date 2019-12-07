@@ -105,6 +105,14 @@ void ClearDevice();
 //declared test fce
 void TestDevice();
 
+void delay_ms(unsigned int time){
+    while(time--)__delay_ms(1);
+}
+
+void delay_NOP(unsigned int counter){
+    while(counter--)NOP();
+}
+
 #ifdef	__cplusplus
 extern "C" {
 #endif /* __cplusplus */
@@ -116,5 +124,5 @@ extern "C" {
 }
 #endif /* __cplusplus */
 
-#endif	/* XC_HEADER_TEMPLATE_H */
+#endif	/* PIC18LF46K22_SFR */
 

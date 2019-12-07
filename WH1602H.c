@@ -5,32 +5,33 @@
  * Created on 3. listopadu 2019, 15:21
  */
 #include "PICF18LF46K22_ConfigSFR.h"
-#include "LCD_EngineLibV2.h"
-
-#include <xc.h>
+#include "LCD_Engine.h"
 
 void InitDevice(){
-    OSCCON=0b01111100; //osc setting, 16 MHz, internal by FOSCH
+    OSCCON=0b01111100; //osc setting, 16 MHz, internal by FOSCH  
+    ANSELD=0x00;
+    TRISD=0x00;
     
-    LCD_Init();    
+    LCD_Initialize();
+    __delay_ms(10);
 }
+
 void ClearDevice(){
+    PORTD=0x00;
     LCD_Clear();
+    LCDGoto(0,0);
 }
 void TestDevice(){
-    //Lcd_Set_Cursor(1, 0);
-    LCD_On();
-    LCD_Print_Char('A');
-    //Lcd_Print_String("HELLO WORLD!");
-    return;
+    LCDPutStr("Hello Word");
+    __delay_ms(1000);
 }
 
 void main(void) {
     InitDevice();
     ClearDevice();
     TestDevice();
-    
-    
+    __delay_ms(100);
     while(1);
-    return;
 }
+
+
