@@ -8,10 +8,10 @@
 #define _XTAL_FREQ 16000000
 
 // set up the timing for the LCD delays
-#define LCD_enableDelayTime    5        // 5 us
-#define LCD_shortDelayTime     100     // 100 us
-#define LCD_longDelayTime      3000     // ~3ms
-#define LCD_StartupTime        20000    // ~20ms
+#define TIME_Enable    5        // 5 us
+#define TIME_Short     100     // 100 us
+#define TIME_Long      3000     // ~3ms
+#define TIME_Startup       20000    // ~20ms
 
 // Command set for Hitachi 44780U LCD display controller
 #define LCD_CLEAR           0x01
@@ -47,6 +47,7 @@
 #define LCD_EN       PORTDbits.RD3                    // LCD enable
 #define LCD_RW       PORTDbits.RD2                      // LCD read/write line
 #define LCD_RS       PORTDbits.RD1                      // LCD register select line
+#define LCD_ON       PORTDbits.RD0                      // LCD ON pin
 
 #define NB_LINES    2                                   // Number of display lines
 #define NB_COL      16                                  // Number of characters per line

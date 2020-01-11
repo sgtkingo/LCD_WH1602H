@@ -7,16 +7,17 @@ void LCD_Initialize()
 {
     LCD_Config();
     // required by display controller to allow power to stabilize
-    LCD_pause(LCD_StartupTime);
+    LCD_ON=1; //On
+    LCD_pause(TIME_Startup);
 
-    LCDWriteNibble(0x03);
-    LCD_pause(5000);
-    LCDWriteNibble(0x03);
-    LCD_pause(120);
-    LCDWriteNibble(0x03);
-    LCD_pause(50);
-    LCDWriteNibble(0x02);
-    LCD_pause(50);
+    LCDWriteNibble(0x03<<4);
+    LCD_pause(10000);
+    LCDWriteNibble(0x03<<4);
+    LCD_pause(1000);
+    LCDWriteNibble(0x03<<4);
+    LCD_pause(1000);
+    LCDWriteNibble(0x02<<4);
+    LCD_pause(500);
 
     // set interface size, # of lines and font
     LCDPutCmd(FUNCTION_SET4bit);
@@ -34,7 +35,7 @@ void LCD_Initialize()
 
 void LCD_Clear(){
     LCDPutCmd(LCD_CLEAR);
-    LCD_pause(LCD_longDelayTime);//Wait to clear display
+    LCD_pause(TIME_Long);//Wait to clear display
 }
 
 void LCD_Config(){
@@ -46,12 +47,13 @@ void LCD_Config(){
     LCD_RW=0;  //mode WRITE
     LCD_RS=0; //ROM select
     LCD_EN=0; //Not enable
+    LCD_ON=0; //Off
 }
 
 void LCD_Enable(){
     NOP();
 	LCD_EN  = 1;
-    LCD_pause(1);
+    LCD_pause(TIME_Enable);
     LCD_EN  = 0;
     NOP();
 }
@@ -88,14 +90,14 @@ void LCDPutChar(char ch)
 {
     //Send byte data
     LCDWriteByte(ch,DAT);
-    LCD_pause(LCD_shortDelayTime);//wait to print char
+    LCD_pause(TIME_Short);//wait to print char
 }
 
 void LCDPutCmd(char cmd)
 {
     //Send cmd byte
     LCDWriteByte(cmd,ISR);
-    LCD_pause(LCD_shortDelayTime); //wait to execute cmd
+    LCD_pause(TIME_Short); //wait to execute cmd
 }
 
 void LCDPutStr(const char *str)
@@ -124,7 +126,7 @@ void LCDGoto(char pos,char ln)
     LCDPutCmd((ln == 1) ? (0xC0 | pos) : (0x80 | pos));
 
     // Wait for the LCD to finish
-    LCD_pause(LCD_shortDelayTime);
+    LCD_pause(TIME_Short);
 }
 
 #endif	/* LCD_ENGINE */
