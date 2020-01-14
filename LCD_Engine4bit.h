@@ -2,6 +2,7 @@
 #define	LCD_ENGINE
 
 #include "LCD_ConfigLib4bit.h"
+#include "LCD_Charset.h"
 
 void LCD_Initialize()
 {
@@ -60,11 +61,11 @@ void LCD_Enable(){
 
 void LCDWriteNibble(char data_nibble)
 {
-    PORTD&=0x0F;
+    LCD_PORT&=0x0F;
     char data=(data_nibble & 0xF0);
     LCD_pause(1);
  
-    PORTD|=data;
+    LCD_PORT|=data;
     LCD_Enable();
     NOP();
 }
